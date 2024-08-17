@@ -37,6 +37,9 @@ class CANSimple {
         MSG_SET_VEL_GAINS,
         MSG_GET_ADC_VOLTAGE,
         MSG_GET_CONTROLLER_ERROR,
+        MSG_SET_INPUT_A,        //D + A*sin(wt+phi)
+        MSG_SET_INPUT_D,        //D + A*sin(wt+phi)
+        MSG_SET_INPUT_PHI,      //D + A*sin(wt+phi)
         MSG_CO_HEARTBEAT_CMD = 0x700,  // CANOpen NMT Heartbeat  SEND
     };
 
@@ -82,6 +85,10 @@ class CANSimple {
     static void set_linear_count_callback(Axis& axis, const can_Message_t& msg);
     static void set_pos_gain_callback(Axis& axis, const can_Message_t& msg);
     static void set_vel_gains_callback(Axis& axis, const can_Message_t& msg);
+
+    static void set_input_A_callback(Axis& axis, const can_Message_t& msg);
+    static void set_input_D_callback(Axis& axis, const can_Message_t& msg);
+    static void set_input_phi_callback(Axis& axis, const can_Message_t& msg);
 
     // Other functions
     static void nmt_callback(const Axis& axis, const can_Message_t& msg);

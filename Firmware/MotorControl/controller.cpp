@@ -358,6 +358,14 @@ bool Controller::update() {
     // Velocity control
     float torque = torque_setpoint_;
 
+    if (!pos_estimate_circular.has_value()) {
+        set_error(ERROR_INVALID_ESTIMATE);
+        return false;
+    }
+
+    float torque_swashplateless = input_A_ + input_D_ * sin(input_phi_ + *pos_estimate_circular);
+    torque = torque_swashplateless;
+
     // Anti-cogging is enabled after calibration
     // We get the current position and apply a current feed-forward
     // ensuring that we handle negative encoder positions properly (-1 == motor->encoder.encoder_cpr - 1)

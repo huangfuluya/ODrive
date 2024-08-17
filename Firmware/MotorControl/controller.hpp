@@ -115,6 +115,10 @@ public:
     float input_filter_kp_ = 0.0f;
     float input_filter_ki_ = 0.0f;
 
+    float input_A_ = 0.03f;
+    float input_D_ = 0.01f;
+    float input_phi_ = 0.0f;
+
     Autotuning_t autotuning_;
     float autotuning_phase_ = 0.0f;
     

@@ -158,6 +158,15 @@ void CANSimple::do_command(Axis& axis, const can_Message_t& msg) {
         case MSG_GET_CONTROLLER_ERROR:
             get_controller_error_callback(axis);
             break;
+        case MSG_SET_INPUT_A:
+            set_input_A_callback(axis, msg);
+            break;
+        case MSG_SET_INPUT_D:
+            set_input_D_callback(axis, msg);
+            break;
+        case MSG_SET_INPUT_PHI:
+            set_input_phi_callback(axis, msg);
+            break;
         default:
             break;
     }
@@ -322,6 +331,19 @@ void CANSimple::set_linear_count_callback(Axis& axis, const can_Message_t& msg) 
 
 void CANSimple::set_pos_gain_callback(Axis& axis, const can_Message_t& msg) {
     axis.controller_.config_.pos_gain = can_getSignal<float>(msg, 0, 32, true);
+}
+
+void CANSimple::set_input_A_callback(Axis& axis, const can_Message_t& msg) {
+    axis.controller_.input_A_ = can_getSignal<float>(msg, 0, 32, true);
+    axis.controller_.input_torque_ = axis.controller_.input_A_;
+}
+
+void CANSimple::set_input_D_callback(Axis& axis, const can_Message_t& msg) {
+    axis.controller_.input_D_ = can_getSignal<float>(msg, 0, 32, true);
+}
+
+void CANSimple::set_input_phi_callback(Axis& axis, const can_Message_t& msg) {
+    axis.controller_.input_phi_ = can_getSignal<float>(msg, 0, 32, true);
 }
 
 void CANSimple::set_vel_gains_callback(Axis& axis, const can_Message_t& msg) {
